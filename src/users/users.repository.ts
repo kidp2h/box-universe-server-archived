@@ -9,7 +9,7 @@ import { ObjectId, UpdateResult } from 'mongodb';
 export class UsersRepository {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-   async getUser(userInput: UserInput): Promise<User> {
+  async getUser(userInput: UserInput): Promise<User> {
     return this.userModel.findOne(userInput);
   }
 
