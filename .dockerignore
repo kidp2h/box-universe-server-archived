@@ -1,0 +1,7 @@
+.docker
+docker
+node_modules
+test
+.git
+yarn-error.log
+.env.example

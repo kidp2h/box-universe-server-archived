@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AccessTokenResponse {
+  accessToken: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+  user: User!
+}
+
+type Mutation {
+  createUser(userInput: UserInput!): User
+  login(userInput: UserInput!): LoginResponse
+}
+
+type Query {
+  getUser(userInput: UserInput!): User
+  getListUsers: [User!]
+  refreshAccessToken(userInput: UserInput!): AccessTokenResponse
+}
+
+type User {
+  _id: ID!
+  username: String!
+  password: String!
+  email: String!
+  refreshToken: String
+  provider: String!
+}
+
+input UserInput {
+  _id: String
+  username: String
+  password: String
+  email: String
+  refreshToken: String
+}

@@ -1,0 +1,7 @@
+FROM node:lts
+WORKDIR /server
+COPY package.json .
+RUN yarn install
+COPY ./server .
+EXPOSE 3000
+CMD [ "yarn", "start:dev" ]
