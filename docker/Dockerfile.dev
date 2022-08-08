@@ -1,6 +1,6 @@
 FROM node:lts
 WORKDIR /server
-COPY package.json .
+COPY ./server/package.json .
 RUN yarn install
 COPY ./server .
 EXPOSE 3000

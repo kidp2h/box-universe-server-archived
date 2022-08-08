@@ -14,8 +14,9 @@ declare const module: any;
 
 async function bootstrap() {
   const cpus = os.cpus().length;
-  console.log(cpus);
   process.env.UV_THREADPOOL_SIZE = cpus.toString();
+  console.log(process.env.TIME_EXPIRE_ACCESS_TOKEN);
+
   const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new MongoExceptionFilter());
@@ -30,13 +31,13 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(
     session({
-      secret: 'your-secret',
+      secret: process.env.SECRET,
       resave: false,
       saveUninitialized: false,
     }),
   );
   // app.use(csurf({ cookie: true }));
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

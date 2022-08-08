@@ -29,10 +29,10 @@ export class AuthService {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
   public login(user: User): LoginResponse {
-    console.log('auth.service:29', user);
-
     const payload: Payload = { username: user.username, sub: user._id };
-    const refreshToken = this.jwtService.sign(payload, { expiresIn: '86400s' });
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: process.env.TIME_EXPIRE_REFRESH_TOKEN,
+    });
     this.usersService.updateRefreshToken(user._id, refreshToken);
     return {
       accessToken: this.jwtService.sign(payload),
@@ -48,7 +48,12 @@ export class AuthService {
     const user = await this.usersService.getUser({ _id });
     const payload: Payload = { username: user.username, sub: user._id };
 
-    if (user.refreshToken === refreshToken) return { accessToken: this.jwtService.sign(payload) };
+    if (user.refreshToken === refreshToken)
+      return {
+        accessToken: this.jwtService.sign(payload, {
+          expiresIn: process.env.TIME_EXPIRE_ACCESS_TOKEN,
+        }),
+      };
     return null;
   }
 }

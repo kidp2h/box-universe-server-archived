@@ -16,7 +16,6 @@ export class AuthResolver {
   })
   @UseGuards(LocalAuthGuard)
   public login(@Args('userInput') userInput: UserInput, @Context() context: any) {
-    console.log('auth.resolver:18');
     return this.authService.login(context.user._doc);
   }
 
