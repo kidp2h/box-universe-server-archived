@@ -25,14 +25,19 @@ export class AuthService {
       return null;
     }
   }
-  public getCookieForLogOut() {
-    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
-  }
   public login(user: User): LoginResponse {
-    const payload: Payload = { username: user.username, sub: user._id };
+    const payload: Payload = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      sub: user._id,
+    };
+    console.log(payload);
+
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: process.env.TIME_EXPIRE_REFRESH_TOKEN,
     });
+
     this.usersService.updateRefreshToken(user._id, refreshToken);
     return {
       accessToken: this.jwtService.sign(payload),
@@ -46,7 +51,12 @@ export class AuthService {
   public async refreshAccessToken(userInput: UserInput) {
     const { _id, refreshToken } = userInput;
     const user = await this.usersService.getUser({ _id });
-    const payload: Payload = { username: user.username, sub: user._id };
+    const payload: Payload = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      sub: user._id,
+    };
 
     if (user.refreshToken === refreshToken)
       return {
