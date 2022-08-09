@@ -17,6 +17,7 @@ type Mutation {
 }
 
 type Query {
+  me: User
   getUser(userInput: UserInput!): User
   getListUsers: [User!]
   refreshAccessToken(userInput: UserInput!): AccessTokenResponse

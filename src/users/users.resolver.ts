@@ -6,11 +6,20 @@ import { UsersService } from './users.service';
 import { UseFilters, UseGuards } from '@nestjs/common';
 import { ValidationExceptionFilter } from '@exceptions/validation.exception';
 import { JwtAuthGuard } from '@guards/authJwt.guard';
+import Current from '@decorators/Current.decorator';
 
 @Resolver(() => User)
 @UseGuards(JwtAuthGuard)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
+
+  @Query(() => User, {
+    name: 'me',
+    nullable: true,
+  })
+  async getMe(@Current() user: User): Promise<User> {
+    return user;
+  }
 
   @Query(() => User, {
     name: 'getUser',
