@@ -1,4 +1,4 @@
-name: Deployment server
+name: BUILD
 
 on:
   push:
